@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyclone AI Dashboard</title>
+<link rel="stylesheet" href="css/style.css?v=3">
+<!-- The dashboard stays framework-free so it can be opened directly in a browser. -->
+<!-- CSS moved to css/style.css. -->
+<!-- JavaScript data and rendering live in js/mockData.js, js/api.js, and js/app.js. -->
+<!--
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:#f4f8fc;color:#16345f}
+.app{display:grid;grid-template-columns:88px 1fr;min-height:100vh}
+.sidebar{background:#fff;border-right:1px solid #e3ebf5;padding:18px 10px;display:flex;flex-direction:column;align-items:center;gap:20px}
+.logo{width:48px;height:48px;border-radius:14px;background:#eaf4ff;display:grid;place-items:center;font-size:25px}
+.nav{width:100%;display:flex;flex-direction:column;gap:9px}.nav button{border:0;background:transparent;border-radius:12px;padding:11px 4px;color:#69809d;cursor:pointer;font-size:11px}.nav button.active{background:#e8f3ff;color:#1677e8}.nav span{display:block;font-size:20px;margin-bottom:4px}
+main{min-width:0}.topbar{height:76px;background:#fff;border-bottom:1px solid #e3ebf5;display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.brand{display:flex;align-items:center;gap:12px}.brand-mark{font-size:29px}.brand h1{margin:0;font-size:19px}.brand p{margin:3px 0 0;font-size:11px;color:#7890aa}
+.status{display:flex;align-items:center;gap:20px;font-size:12px;color:#617792}.live{background:#e5f8f1;color:#079669;border-radius:20px;padding:8px 14px;font-weight:700}.dot{display:inline-block;width:7px;height:7px;background:#13b985;border-radius:50%;margin-right:7px}
+.content{padding:18px;display:grid;grid-template-columns:1.35fr .9fr .72fr;grid-template-rows:auto auto 1fr;gap:14px;max-width:1500px;margin:auto}
+.card{background:#fff;border:1px solid #e3ebf5;border-radius:14px;box-shadow:0 5px 20px rgba(40,78,120,.05);padding:15px;min-width:0}.card h2{font-size:15px;margin:0 0 12px}.muted{color:#7b8fa8;font-size:11px}
+.satellite{grid-row:span 2}.image{height:455px;border-radius:10px;overflow:hidden;position:relative;background:radial-gradient(circle at 60% 52%,#f7fbff 0 5%,#b9d7ea 7%,#6b9abb 17%,#2d5576 32%,#102e4b 62%,#0b2138 100%)}.image:before{content:"";position:absolute;inset:-25%;background:repeating-conic-gradient(from 8deg at 58% 52%,rgba(255,255,255,.22) 0 3deg,transparent 3deg 10deg);border-radius:50%;filter:blur(4px)}.eye{position:absolute;width:46px;height:46px;border-radius:50%;background:#173957;left:55%;top:49%;box-shadow:0 0 0 14px rgba(255,255,255,.18)}.box{position:absolute;left:37%;top:29%;width:37%;height:42%;border:2px solid #23d19b;border-radius:8px}.tag{position:absolute;left:12px;top:12px;background:#122d47;color:#fff;padding:6px 9px;border-radius:7px;font-size:10px}.timestamp{position:absolute;left:12px;bottom:12px;background:rgba(8,25,43,.78);color:#fff;padding:6px 9px;border-radius:7px;font-size:10px}
+.detection{grid-column:2}.eye-card{grid-column:3}.movement{grid-column:2 / 4}.track{grid-column:1 / 3}.errors{grid-column:3}
+.rows{display:flex;flex-direction:column}.row{display:flex;justify-content:space-between;gap:15px;padding:12px 0;border-bottom:1px solid #edf2f7;font-size:12px}.row:last-child{border:0}.row strong{color:#16345f}.badge{display:inline-flex;align-items:center;background:#e5f8f1;color:#079669;border-radius:18px;padding:8px 12px;font-weight:700;font-size:12px;margin-bottom:5px}.eye-img{height:165px;border-radius:9px;background:radial-gradient(circle at 51% 52%,#0b2035 0 7%,#c7d8e4 9%,#718da0 22%,#dce6ed 37%,#758da0 53%,#e6edf2 72%);position:relative;overflow:hidden}.eye-img:before{content:"";position:absolute;inset:-40%;background:repeating-conic-gradient(from 15deg at 51% 52%,rgba(20,50,75,.2) 0 4deg,transparent 4deg 13deg);filter:blur(2px)}
+.metrics{display:grid;grid-template-columns:1.2fr 1fr 1fr;align-items:center}.direction{display:flex;align-items:center;gap:14px}.arrow{width:66px;height:66px;border-radius:50%;background:#edf6ff;display:grid;place-items:center;font-size:34px;color:#1677e8}.big{font-size:24px;font-weight:800}.metric strong{display:block;font-size:15px}.metric span{font-size:11px;color:#7b8fa8}.map{height:355px;border-radius:10px;position:relative;overflow:hidden;background:linear-gradient(155deg,#6c8d67 0 18%,#35655e 18% 25%,#123f57 25% 100%)}.land{position:absolute;inset:-15% 48% 15% -10%;background:#6f936a;transform:rotate(-8deg);border-radius:50%}.land2{position:absolute;inset:0 -10% 30% 74%;background:#71936b;transform:rotate(10deg);border-radius:50%}.sea-label{position:absolute;left:56%;top:52%;color:rgba(255,255,255,.45);font-size:15px;font-style:italic}.trackline{position:absolute;left:10%;top:72%;width:67%;height:3px;background:#58a0ff;transform:rotate(-29deg);transform-origin:left;border-radius:5px}.pred{position:absolute;left:52%;top:48%;width:36%;height:3px;background:repeating-linear-gradient(90deg,#fff 0 8px,transparent 8px 15px);transform:rotate(-34deg);transform-origin:left}.points{position:absolute;left:10%;top:72%;width:48%;height:45%}.point{position:absolute;width:10px;height:10px;border-radius:50%;background:#4d9cff;border:2px solid #fff}.p1{left:0;top:80%}.p2{left:20%;top:68%}.p3{left:38%;top:55%}.p4{left:54%;top:42%}.p5{left:68%;top:28%}.current{position:absolute;left:50%;top:49%;width:21px;height:21px;border-radius:50%;background:#13c993;border:4px solid #fff;box-shadow:0 0 0 4px rgba(19,201,147,.35)}.future{position:absolute;width:12px;height:12px;border-radius:50%;border:2px solid #fff;background:transparent}.f1{left:62%;top:39%}.f2{left:72%;top:29%}.f3{left:82%;top:18%}.label{position:absolute;font-size:10px;color:#fff;font-weight:700;text-shadow:0 1px 2px #000}.l1{left:61%;top:43%}.l2{left:71%;top:33%}.l3{left:81%;top:22%}.legend{position:absolute;bottom:10px;left:10px;background:#fff;border-radius:8px;padding:8px 10px;display:flex;gap:13px;font-size:9px}.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}.blue{background:#4d9cff}.green{background:#13c993}.white{border:2px solid #6b819a}.error-table{width:100%;border-collapse:collapse;font-size:11px}.error-table th,.error-table td{padding:10px 7px;text-align:left;border-bottom:1px solid #edf2f7}.error-table th{color:#617792}.forecast{margin-top:12px;background:#f5f9fd;border-radius:9px;padding:12px;font-size:11px}.forecast b{font-size:13px}.refresh{border:1px solid #dce7f2;background:#fff;border-radius:8px;padding:7px 10px;color:#1677e8;cursor:pointer;font-size:11px}
+@media(max-width:1050px){.content{grid-template-columns:1fr 1fr}.satellite{grid-row:auto}.detection,.eye-card,.movement,.track,.errors{grid-column:auto}.track{grid-column:1 / -1}.errors{grid-column:1 / -1}.topbar .status span:not(.live){display:none}}
+@media(max-width:700px){.app{grid-template-columns:1fr}.sidebar{display:none}.content{grid-template-columns:1fr;padding:10px}.track{grid-column:auto}.image{height:350px}.metrics{grid-template-columns:1fr;gap:18px}.topbar{padding:0 14px}}
+-->
+</head>
+<body>
+<section id="authScreen" class="auth-screen" aria-labelledby="loginTitle">
+  <div class="ambient-scene" aria-hidden="true"><span class="ambient-globe"><svg class="globe-rotation" viewBox="0 0 420 420" role="presentation"><defs><radialGradient id="globeFill" cx="34%" cy="28%"><stop offset="0" stop-color="#ffffff" stop-opacity=".48"/><stop offset=".28" stop-color="#62c3cc" stop-opacity=".28"/><stop offset="1" stop-color="#5b6fbc" stop-opacity=".08"/></radialGradient><clipPath id="globeClip"><circle cx="210" cy="210" r="204"/></clipPath></defs><circle class="globe-sphere" cx="210" cy="210" r="204" fill="url(#globeFill)"/><g class="globe-lines" clip-path="url(#globeClip)"><ellipse cx="210" cy="210" rx="84" ry="204"/><ellipse cx="210" cy="210" rx="150" ry="204"/><ellipse cx="210" cy="210" rx="204" ry="78"/><ellipse cx="210" cy="210" rx="204" ry="142"/></g><g class="globe-land" clip-path="url(#globeClip)"><path d="M56 126l26-26 48-10 34 20 10 29-25 19-9 29-31 8-22-22-32-8z"/><path d="M173 178l28-10 26 20-4 29-21 20-7 41-24 42-25-12 5-45-17-27 17-28z"/><path d="M250 111l38-18 58 14 39 31-8 27-42 7-20 22-35-8-17-28-30-13z"/><path d="M294 201l35-4 24 26-17 23-33 2-20-20z"/><path d="M330 309l33 10 20 27-24 22-38-11-14-25z"/></g><g class="globe-borders" clip-path="url(#globeClip)"><path d="M91 102l18 28 28 10m-60 7l42 11 33 20m-57 17l31-16 31 2m-10 21l22 28 29 4m-35 17l28-17 24 19m-5-142l17 31 29 20m-4-68l-6 42 25 25m40-78l-12 39 20 29m-5-40l36 19 13 29m-44 17l30-12 40 16m-38 18l30 20 44 1m-62 19l28 18 34 2m-48 20l38 12 16 29m-65-7l28 23 17 31"/></g></svg></span><span class="ambient-scan"></span><span class="ambient-sweep"></span></div>
+  <div class="auth-showcase" aria-label="Cyclone AI introduction">
+    <div class="showcase-center"><h1 class="fold-brand-title fold-animated" data-fold-text="Cyclone AI"></h1></div>
+  </div>
+  <div class="auth-panel">
+    <div class="simple-brand"><div class="cyclone-logo" aria-hidden="true"><span></span></div><div><strong>Cyclone AI</strong><small>Cyclone monitoring </small></div></div>
+    <div class="auth-heading"><h2 id="loginTitle" class="fold-login-title fold-animated" data-fold-text="Sign in"></h2><p>Use your details to open the Cyclone ai.</p></div>
+    <form id="loginForm" class="login-form">
+      <label for="userName">Full name</label><input id="userName" name="userName" type="text" autocomplete="name" placeholder="e.g. Suryansh Jha" required>
+      <label for="userEmail">Work email</label><input id="userEmail" name="userEmail" type="email" autocomplete="email" placeholder="you@organization.org" required>
+      <label for="userPassword">Password</label><div class="password-field"><input id="userPassword" name="userPassword" type="password" autocomplete="current-password" minlength="4" placeholder="Enter your password" required><button id="passwordToggle" class="password-toggle" type="button" aria-controls="userPassword" aria-label="Show password">Show</button></div>
+      <button class="login-button" type="submit">login</button><p id="loginMessage" class="login-message" role="alert"></p>
+    </form>
+    <p class="auth-note">Demo access · information stays in this browser</p>
+  </div>
+</section>
+<div id="dashboardApp" class="app hidden">
+<aside class="sidebar">
+  <div class="logo">🌀</div>
+  <div class="nav">
+    <button class="active"><span>⌂</span>Dashboard</button>
+    <button><span>▣</span>Live Feed</button>
+    <button><span>⌁</span>Track</button>
+    <button><span>◈</span>Forecast</button>
+    <button><span>⚙</span>Settings</button>
+  </div>
+</aside>
+<main>
+<header class="topbar">
+  <div class="brand"><div class="brand-mark"><span class="cyclone-logo small" aria-hidden="true"><span></span></span></div><div><h1>Cyclone AI</h1><p>Real-time Cyclone Detection & Track Prediction · <span id="userGreeting">Operator</span></p></div></div>
+  <div class="status"><span id="liveStatus" class="live"><span class="dot"></span>WAITING</span><span>◷ Last image: <b id="time"></b></span><button id="refreshButton" class="refresh" type="button">Refresh</button><button id="logoutButton" class="logout-button" type="button">Sign out</button></div>
+</header>
+<section class="content">
+  <!-- ===== LIVE SATELLITE CARD (Requirement 11) ===== -->
+  <div class="card live-satellite-card" id="liveSatelliteCard">
+    <h2>🛰️ LIVE SATELLITE <span class="live-pulse" id="livePulse" style="display:none"><span class="pulse-dot"></span>LIVE</span></h2>
+    <div class="live-sat-image-wrap">
+      <img id="liveSatImage" class="live-sat-photo hidden" alt="Latest processed INSAT satellite image">
+      <div class="live-sat-overlay-strip">
+        <span class="live-sat-label" id="liveSatName">INSAT-3DS</span>
+        <span class="live-sat-label" id="liveSatSensor">IMG_TIR1</span>
+        <span class="live-sat-label live-sat-ts" id="liveSatTimestamp">--</span>
+      </div>
+      <div class="live-sat-refresh-strip">
+        <span class="live-sat-status" id="liveSatStatus">Last checked: --</span>
+        <button id="liveSatRefreshBtn" class="live-sat-refresh-btn" type="button" title="Force check MOSDAC">⟳ Check Now</button>
+      </div>
+    </div>
+    <div class="live-sat-meta-row">
+      <div class="live-sat-meta"><span class="meta-label">Dataset</span><strong id="liveSatDataset">3SIMG_L1B_STD</strong></div>
+      <div class="live-sat-meta"><span class="meta-label">Satellite</span><strong id="liveSatSatellite">INSAT-3DS</strong></div>
+      <div class="live-sat-meta"><span class="meta-label">Channel</span><strong id="liveSatChannel">IMG_TIR1</strong></div>
+      <div class="live-sat-meta"><span class="meta-label">Frame</span><strong id="liveSatFrame" class="muted" style="font-size:9px;word-break:break-all">--</strong></div>
+    </div>
+  </div>
+  <!-- ===== ORIGINAL SATELLITE IMAGE CARD ===== -->
+  <div class="card satellite"><h2>Cyclone Overlay <span class="muted" id="source" style="float:right"></span></h2><div class="image empty" aria-label="Latest cyclone detection overlay"><img id="satelliteImage" class="satellite-photo hidden" alt="Latest satellite image with cyclone detection overlay"><div class="tag">CYCLONE AREA</div><div class="box"></div><div class="eye"></div><div class="timestamp" id="stamp"></div></div></div>
+  <div class="card detection"><h2>Cyclone Detection</h2><div id="detectionBadge" class="badge"></div><div class="rows"><div class="row"><span>Detection confidence</span><strong id="confidence"></strong></div><div class="row"><span>Eye detection</span><strong id="eyeStatus"></strong></div><div class="row"><span>Eye latitude</span><strong id="eyeLatitude"></strong></div><div class="row"><span>Eye longitude</span><strong id="eyeLongitude"></strong></div><div class="row"><span>Eye bounding box</span><strong id="eyeBBox"></strong></div><div class="row"><span>Eye diameter</span><strong id="eyeDiameter"></strong></div><div class="row"><span>Processing time</span><strong id="processing"></strong></div></div></div>
+  <div class="card eye-card"><h2>◉ Eye Detection Overlay</h2><div class="eye-img"><img id="eyeImage" class="eye-photo hidden" alt="Satellite overlay showing model eye detection"></div><div id="eyeBadge" class="badge"></div><div class="muted">Eye confidence: <span id="eyeConfidence"></span></div></div>
+  <div class="card movement"><h2>➤ Current Movement</h2><div class="metrics"><div class="direction"><div id="arrow" class="arrow" role="img">↖</div><div><div id="direction" class="big"></div><div class="muted">Direction</div></div></div><div class="metric"><strong id="speed"></strong><span>Speed</span></div><div class="metric"><strong id="bearing"></strong><span>Bearing</span></div></div></div>
+  <div class="card forecast-card">
+    <div class="forecast-heading-row"><h2>Forecast Track</h2><div class="forecast-landfall"><span>Landfall probability</span><strong id="landfallProbability">--</strong></div></div>
+    <div class="forecast-table-wrap"><table class="error-table forecast-table"><thead><tr><th scope="col">Hour</th><th scope="col">Latitude</th><th scope="col">Longitude</th><th scope="col">Cone radius</th><th scope="col">Uncertainty radii</th></tr></thead><tbody id="forecastRows"></tbody></table></div>
+    <section class="forecast-history"><h3>Track Error History</h3><table class="error-table"><thead><tr><th scope="col">Forecast</th><th scope="col">Error (km)</th></tr></thead><tbody id="errorBody"></tbody></table></section>
+  </div>
+</section>
+<div id="notice" class="notice hidden" role="status"></div>
+<dialog id="settingsDialog" class="settings-dialog" aria-labelledby="settingsTitle">
+  <form method="dialog"><button class="settings-close" aria-label="Close settings">×</button></form>
+  <h2 id="settingsTitle">Pipeline status</h2>
+  <p class="muted">Read-only service configuration and connection health.</p>
+  <dl class="settings-list">
+    <div><dt>Backend</dt><dd id="settingBackend">Checking…</dd></div>
+    <div><dt>MOSDAC credentials</dt><dd id="settingMosdac">Checking…</dd></div>
+    <div><dt>Dataset / channel</dt><dd id="settingDataset">Checking…</dd></div>
+    <div><dt>Polling interval</dt><dd id="settingInterval">Checking…</dd></div>
+    <div><dt>Last catalog check</dt><dd id="settingLastCheck">Checking…</dd></div>
+  </dl>
+  <button id="settingsRefreshButton" class="refresh" type="button">Refresh status</button>
+</dialog>
+</main>
+</div>
+<script src="js/mockData.js"></script>
+<script src="js/api.js?v=2"></script>
+<script src="js/app.js?v=4"></script>
+</body>
+</html>

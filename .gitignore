@@ -1,0 +1,49 @@
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+
+# Python environments and caches
+.myvenv/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.vscode/
+
+# Satellite, reanalysis, and generated data
+/data/
+/actual_data_split/
+/live_inputs/
+/live_outputs/
+/cyclone_image/*.h5
+/cyclone_image/*.hdf
+/cyclone_image/*.hdf5
+/cyclone_image/*.zip
+/cyclone_image/*.png
+/era5_sample_nio.nc
+/numeric_data/*.csv
+/numeric_data/*.json
+/data_preprocess/cyclone_dataset_splits.json
+*.npy
+*.nc
+*.h5
+*.hdf
+*.hdf5
+*.zip
+
+# Model checkpoints and generated evaluation artifacts
+*.pth
+*.pt
+/models/**/*.csv
+/models/**/*.png
+/models/**/*.log
+/models/**/*.xlsx
+/prediction_output.png
+/Slide_*.png
+/cyclone\ dash.txt
+/important\ info.txt

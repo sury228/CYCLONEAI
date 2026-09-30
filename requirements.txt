@@ -1,0 +1,32 @@
+# CycloneVision AI - Package Requirements
+# SIH Problem Statement ID: 26070
+
+# Deep Learning Framework & Compute Acceleration
+torch>=2.0.0
+torchvision>=0.15.0
+# Optional GPU acceleration packages:
+# For AMD GPUs on Windows (e.g., Radeon RX 6500M): torch-directml
+# For NVIDIA GPUs: torch --extra-index-url https://download.pytorch.org/whl/cu121
+
+# Scientific Computing & Data Processing
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.10.0
+scikit-learn>=1.2.0
+
+# Satellite & NWP Meteorological Data Formats
+h5py>=3.8.0
+xarray>=2023.1.0
+netCDF4>=1.6.0
+cdsapi>=0.6.0
+
+# Visualization & Image Utilities
+matplotlib>=3.7.0
+pillow>=9.5.0
+
+# Web Backend & API Server
+fastapi>=0.95.0
+uvicorn>=0.22.0
+requests>=2.28.0
+python-dotenv>=1.0.0
+aiofiles>=23.1.0
